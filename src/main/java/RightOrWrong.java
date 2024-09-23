@@ -26,15 +26,14 @@ public class RightOrWrong {
             int wrongNum = 0;
             StringBuffer right = new StringBuffer();
             StringBuffer wrong = new StringBuffer();
-            String answer="1";
             // 循环读取每一行
             for (int i=1;(line1 = bufferedReader1.readLine()) != null&&(line2 = bufferedReader2.readLine()) != null;i++) {
+                Fenshu countFenshu = calculator.count(line1);
+                Fenshu answerFenshu = calculator.count(line2);
                 System.out.println(line1);
-                List<String> list1 = calculator.process(line1);
-                calculator.simpleTosuffix(list1);
-
+                System.out.println(line2);
                 //计算器代码引用
-                if(answer==line2){
+                if(countFenshu.denominator==answerFenshu.denominator&&countFenshu.numerator==answerFenshu.numerator){
                     rightNum++;
                     right.append(i+" ");
                 }else{

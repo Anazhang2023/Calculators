@@ -64,11 +64,7 @@ public class calculator {
         }
         return list;
     }
-    public void printList(List<String> list){
-        for(String o:list){
-            System.out.print(o+" ");
-        }
-    }
+
     //一般计算式转换为后缀表达式
     public static List<String> simpleTosuffix(List<String> list){
         List<String> Postfixlist = new ArrayList<String>();//存放后缀表达式
@@ -109,6 +105,49 @@ public class calculator {
         return Postfixlist;
     }
 
-
+    //后缀表达式计算
+    public static Fenshu count(String str){
+        List<String> list2 = calculator.process(str);
+        List<String> list = calculator.simpleTosuffix(list2);
+        Stack<Fenshu> stack = new Stack<Fenshu>();
+        for(int i=0;i<list.size();i++){
+            String s = list.get(i);
+            if(!calculator.isOp(s)){
+                Fenshu fenshu;
+                StringTokenizer tokenizer = new StringTokenizer(s, "/");
+                int numerator = Integer.parseInt(tokenizer.nextToken());
+                if(tokenizer.hasMoreTokens()) {
+                    int denominator = Integer.parseInt(tokenizer.nextToken());
+                    fenshu = new Fenshu(numerator, denominator);
+                }else {
+                    fenshu = new Fenshu(numerator, -1);
+                }
+                stack.push(fenshu);
+            }else{
+                if(s.equals("+")){
+                    Fenshu a1 = stack.pop();
+                    Fenshu a2 = stack.pop();
+                    Fenshu v = a2.add(a1);
+                    stack.push(v);
+                }else if(s.equals("-")){
+                    Fenshu a1 = stack.pop();
+                    Fenshu a2 = stack.pop();
+                    Fenshu v = a2.sub(a1);
+                    stack.push(v);
+                }else if(s.equals("×")){
+                    Fenshu a1 = stack.pop();
+                    Fenshu a2 = stack.pop();
+                    Fenshu v = a2.muti(a1);
+                    stack.push(v);
+                }else if(s.equals("÷")){
+                    Fenshu a1 = stack.pop();
+                    Fenshu a2 = stack.pop();
+                    Fenshu v = a2.div(a1);
+                    stack.push(v);
+                }
+            }
+        }
+        return stack.pop();
+    }
 
 }
