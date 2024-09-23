@@ -1,5 +1,5 @@
 import java.io.*;
-import java.text.NumberFormat;
+import java.util.List;
 
 /**
  * @Author : ZhangYiXin
@@ -30,7 +30,9 @@ public class RightOrWrong {
             // 循环读取每一行
             for (int i=1;(line1 = bufferedReader1.readLine()) != null&&(line2 = bufferedReader2.readLine()) != null;i++) {
                 System.out.println(line1);
-                String[] nums = line1.split(" ");
+                List<String> list1 = calculator.process(line1);
+                calculator.simpleTosuffix(list1);
+
                 //计算器代码引用
                 if(answer==line2){
                     rightNum++;
